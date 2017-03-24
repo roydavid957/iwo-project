@@ -6,14 +6,17 @@ import sys
 import os
 import time
 
-def main():
+def main(argv): #main():
 
 	start_time = time.time()
 	print("This program calculates the use of emojis in tweets by age(young(1986-2010)/old(1930-1976)) in %'s using a /net/corpora/twitter2/Tweets file from the RUG")
 	print("\nRetrieving data, might take a couple of minutes...")
+	f = []
+	for line in sys.stdin:
+		f.append(line)
 	#os.system("zcat /net/corpora/twitter2/Tweets/2016/08/20160815*.out.gz | /net/corpora/twitter2/tools/tweet2tab user text > 20160815.txt")
 	print("Retrieving data done")
-	f = open("20160815.txt", "r")
+	#f = open("20160815.txt", "r")
 	emojilist = ["^-^","o.O","O.o",">:O",":v",":3",":D",";D",":-D",";-D",":)",";)",":-)",";-)","<3",":P",";P",":-P",";-P","XD","xD","x-D",":'D",":(",":-(","</3",":')",":'(","*-*","-_-","0_0",":o",":O",":-o",":-O",":'O",":'o",">.<",">,<",":*",";*",":|",":/",":]",";]"]
 	young = [str(i) for i in range(1986,2011)]
 	old = [str(i) for i in range(1930,1977)]
@@ -31,7 +34,7 @@ def main():
 	print("total tweets with emojis within old agerange(1930-1976):\t", res[0],"\ntotal tweets with emojis within young agerange(1986-2010):\t", res[1])
 	print("\nResults:")
 	print("% old tweets w/ emoji(s) / total old tweets in data:\t\t", res[2],"\n% young tweets w/ emoji(s) / total young tweets in data:\t", res[3])
-	f.close()
+	#f.close()
 	print("\n--- %s seconds ---" % (time.time() - start_time)) #http://stackoverflow.com/questions/1557571/how-to-get-time-of-a-python-program-execution
 
 def tweets_w_age(f, agerange): #filters data by birthyear in agerange in username, returns filtered datalist
@@ -77,4 +80,4 @@ def results(young, old, agerange, emojicntr): #counts how many old tweets there 
 	return [oldcntr, youngcntr, perc_old, perc_young]
 
 if __name__ == "__main__":
-	main()
+	main(sys.argv) #main()
